@@ -1,9 +1,10 @@
+from Trabalho import Trabalho
 class Agenda:
     def __init__(self):
         self.trabalhos = []
 
-    def setTrabalhos(self, trabalho):
-        self.trabalhos.append(trabalho)
+    def novoTrabalho(self, fk_id_pet, data, horario, procedimento):
+        self.trabalhos.append(Trabalho(fk_id_pet, data, horario, procedimento))
 
-    def getTrabalhos(self):
-        return self
+##    def excluirTrabalho(self, horario):
+        #fazer
