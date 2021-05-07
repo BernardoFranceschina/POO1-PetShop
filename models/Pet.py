@@ -9,6 +9,10 @@ class Pet:
         self.cor = cor
         self.id_pet = next(Pet.id_iter)
 
+    def printData(self, detalhes):
+        print("\nNome:", self.nome, "\nEspécie:", self.especie, end=" ")
+        if detalhes:
+            print("\nRaça:", self.raca, "\nCor:", self.cor)
 
 class Vip(Pet):
     def __init__(self, id_pet, especie, nome, raca, cor, peso, altura, vacinas, planoSaude):
@@ -17,4 +21,3 @@ class Vip(Pet):
         self.vacinas = vacinas
         self.planoSaude = planoSaude
         super().__init__(id_pet, especie, nome, raca, cor)
-
