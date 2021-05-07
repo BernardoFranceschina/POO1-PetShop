@@ -1,7 +1,5 @@
 from PetShopStruct import *
 clients = []
-                #sonim blainim sinim clevri
-
 
 def main():
     while True:
@@ -47,6 +45,3 @@ def printData():
                 print("\nNome:", j.name, "\nEspécie:", j.animalType, "\nRaça:", j.breed, "\nCor:", j.color)
 
 main()
-
-
-#fikoooooooooooooooooof
