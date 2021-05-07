@@ -18,7 +18,7 @@ class Client:
         if details:
             print("Email:", self.email, "Telefone:", self.number, "CPF:", self.cpf, end=" ")
         if pets:
-            print("Animais: ", end="")
+            print("-- Animais: ", end="")
             for j in self.pets:
                 print(j.name, end=", ")
 
@@ -29,7 +29,7 @@ class Pet:
         self.breed = breed
         self.color = color
 
-    def printData(self, details, trash=0):
+    def printData(self, details):
         print("\nNome:", self.name, "\nEspécie:", self.animalType, end=" ")
         if details:
             print("\nRaça:", self.breed, "\nCor:", self.color)
