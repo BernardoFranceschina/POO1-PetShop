@@ -5,7 +5,7 @@ from models.helper import helper
 from models.ListaClientes import ListaClientes
 from models.Pet import Pet
 from models.Procedimento import Procedimento
-from models.Trabalho import *
+from models.Trabalho import Trabalho
 
 clientes = ListaClientes()
 
