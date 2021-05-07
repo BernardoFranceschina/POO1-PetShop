@@ -1,5 +1,6 @@
 from helpers.helper import *
-from models.clientes import *
+from models import *
+
 clientes = []
 
 def main():
@@ -19,9 +20,7 @@ def main():
         else: print("Comando inválido")
 
 def registercliente():
-    clientes.append(cliente(input("Nome: "), input("Email: "), input("Número de telefone: "), input("CPF: ")))
-    if getAnswer("Deseja cadastrar um animal deste dono? (s/n)") == 'S':
-        clientes[-1].addPet()
+    clientes.novoCliente()
     
 def registerPet():
     nome = input("Qual o dono do animal? ")
