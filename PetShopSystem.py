@@ -9,7 +9,7 @@ def main():
         elif option == "2":
             registerPet()
         elif option == "3":
-            printData()
+            printData()         #Mudar nome
         elif option == "4":
             print("cu")
         elif option == "5":
@@ -23,8 +23,10 @@ def registerClient():
         clients[-1].addPet()
     
 def registerPet():
-    clientIndex = findClient(clients)
-    if clientIndex == None:
+    name = input("Qual o dono do animal? ")
+    clientIndex = findClient(name, clients)
+    if clientIndex == []:
+        print("Cliente não encontrado.")
         if getAnswer("Deseja ver a lista de clientes e seus animais? ") == 'S':
             printList(False, True, clients)
 
@@ -32,16 +34,25 @@ def registerPet():
         clients[clientIndex[0]].addPet()
 
     else:
-        clients[choosefromlist("Mais de um cliente/animal com este nome encontrado. Escolha um da seguinte lista:", clientIndex, clients, exitOption=False)].addPet()
+        clients[choosefromlist("Mais de um cliente com este nome encontrado. Escolha um da seguinte lista:", clientIndex, clients, exitOption=False)].addPet()
         
 def printData():
     name = input("Nome do cliente ou animal: ")
-    for i in clients:
-        if i.name == name:
-            print("\nNome:", i.name, "\nEmail:", i.email, "\nTelefone:", i.number, "\nCPF:", i.cpf)
-            return
-        for j in i.pets:
-            if j.name == name:
-                print("\nNome:", j.name, "\nEspécie:", j.animalType, "\nRaça:", j.breed, "\nCor:", j.color)
+    objIndex = findClient(name, clients) + findPet(name, clients)
+
+    if objIndex == []:
+        print("Cliente/animal não encontrado.")
+        if getAnswer("Deseja ver a lista de clientes e seus animais? ") == 'S':
+            printList(False, True, clients)
+
+    elif len(objIndex) == 1:
+        if isClientIndex(objIndex[0]):
+            clients[objIndex[0]].printData(True, True, clients)
+        else:
+            clients[objIndex[0][0]].pets[options[0][1]].printData(True)
+
+    else:
+        choice = choosefromlist("Mais de um cliente/animal com este nome encontrado. Escolha um da seguinte lista:", objIndex, clients, exitOption=False).printData(True, True)
+
 
 main()

@@ -13,6 +13,15 @@ class Client:
             if getAnswer("Deseja cadastrar outro animal a este dono?(S/N) ") == "N":
                 break
 
+    def printData(self, details, pets):
+        print("\nNome:", self.name, end=" ")
+        if details:
+            print("Email:", self.email, "Telefone:", self.number, "CPF:", self.cpf, end=" ")
+        if pets:
+            print("Animais: ", end="")
+            for j in self.pets:
+                print(j.name, end=", ")
+
 class Pet:
     def __init__(self, animalType, name, breed, color):
         self.animalType = animalType
@@ -20,44 +29,52 @@ class Pet:
         self.breed = breed
         self.color = color
 
-def findClient(clients):
-    name = input("Qual o nome do cliente? ")
+    def printData(self, details, trash=0):
+        print("\nNome:", self.name, "\nEspécie:", self.animalType, end=" ")
+        if details:
+            print("\nRaça:", self.breed, "\nCor:", self.color)
+
+def findClient(name, clients):
     foundClients = []
 
     for i in range(len(clients)):
         if clients[i].name == name:
             foundClients.append(i)
 
-    if foundClients == []:
-        print("Nenhum cliente encontrado")
-        return None
-
     else: return foundClients
+
+def findPet(name, clients):
+    foundPets = []
+
+    for i in range(len(clients)):
+        for j in range(len(clients[i].pets)):
+            if clients[i].pets[j].name == name:
+                foundPets.append([i, j])
+
+    else: return foundPets
 
 def choosefromlist(text, options, clients, exitOption):
     print(text)
     for i in range(len(options)):
-        if isinstance(clients[options[i]], Client):
-            print(f"\n{i+1}: Cliente:", clients[options[i]].name, "Email:", clients[options[i]].email, "CPF:", clients[options[i]].cpf, "Animais:", end="")
-            for j in clients[options[i]].pets:
-                print(j.name, end=" ") 
+        if isClientIndex(options[i]):
+            print(f"\n{i+1}: Cliente -- ", end="")
+            clients[options[i]].printData(True, True)
         else:
-            print(f"{i+1}: Animal:", clients[options[i]].name, "Espécie:", clients[options[i]].animalType, "Raça:", clients[options[i]].breed, "Cor:", clients[options[i]].color)
+            print(f"{i+1}: Animal -- ", end="")
+            clients[options[i][0]].pets[options[i][1]].printData(True)
 
     if exitOption:
         return int(getAnswer("", [str(x) for x in range(len(options) + 1)]))
     else: return int(getAnswer("", [str(x) for x in range(1, len(options) + 1)])) - 1
     
+def isClientIndex(index):
+    if isinstance(index, int):
+        return True
+    else: return False
 
 def printList(clientDetails, pets, clients):
     for i in clients:
-        print("Nome:", i.name, end=" ")
-        if clientDetails:
-            print("Email:", i.email, "Telefone:", i.number, "CPF:", i.cpf, end=" ")
-        if animals:
-            print("Animais: ", end="")
-            for j in i.pets:
-                print(j.name, end=" ")
+        i.printData(clientDetails, pets)
 
 def getnum(question, amount = 1, min = 'n', max = 'n', type = 'i', separator = " "):
     def isvalidinput(list1):
