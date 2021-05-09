@@ -1,18 +1,17 @@
 import itertools
 id_iter = itertools.count(0)
 class Pet:
-    def __init__(self, id_pet, especie, nome, raca, cor):
-        self.id_pet = id_pet
+    def __init__(self, especie, nome, raca, cor):
+        self.id_pet = next(id_iter)
         self.especie = especie
         self.nome = nome
         self.raca = raca
         self.cor = cor
-        self.id_pet = next(Pet.id_iter)
 
     def printData(self, detalhes):
-        print("\nNome:", self.nome, "\nEspécie:", self.especie, end=" ")
+        print("Nome:", self.nome, "| Espécie:", self.especie, end=" ")
         if detalhes:
-            print("\nRaça:", self.raca, "\nCor:", self.cor)
+            print("| Raça:", self.raca, "| Cor:", self.cor)
 
 class Vip(Pet):
     def __init__(self, id_pet, especie, nome, raca, cor, peso, altura, vacinas, planoSaude):

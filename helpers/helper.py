@@ -84,3 +84,7 @@ def getAnswer(text, options=['S', 'N']):
         else:
             return answer
 
+def isclienteIndex(index):
+    if isinstance(index, int):
+        return True
+    else: return False
