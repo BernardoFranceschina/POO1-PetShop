@@ -1,4 +1,4 @@
-from Procedimento import Procedimento
+from models.Procedimento import Procedimento
 class ListaProced:
     def __init__(self):
         self.proced = []

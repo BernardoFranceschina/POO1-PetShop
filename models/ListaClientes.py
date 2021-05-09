@@ -1,5 +1,5 @@
-from Cliente import Cliente
-from helper import getAnswer
+from models.Cliente import Cliente
+from helpers.helper import getAnswer
 import itertools
 id_iter = itertools.count()
 

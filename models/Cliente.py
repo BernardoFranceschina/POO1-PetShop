@@ -1,4 +1,4 @@
-from Pet import Pet
+from models.Pet import Pet
 class Cliente:
     def __init__(self, id_cliente, nome, email, telefone, cpf, pets=[], gasto=0):
         self.id_cliente = id_cliente

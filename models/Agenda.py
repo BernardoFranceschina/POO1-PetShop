@@ -1,4 +1,4 @@
-from Trabalho import *
+from models.Trabalho import *
 class Agenda:
     def __init__(self):
         self.trabalhos = []

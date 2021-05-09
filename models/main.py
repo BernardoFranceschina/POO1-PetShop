@@ -1,6 +1,7 @@
 from helpers.helper import *
 from models.Agenda import Agenda
 from models.Cliente import Cliente
+from models.helper import helper
 from models.ListaClientes import ListaClientes
 from models.Pet import Pet
 from models.Procedimento import Procedimento
