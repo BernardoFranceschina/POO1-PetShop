@@ -10,8 +10,12 @@ class ListaProcedimentos:
         for procedimento in self.procedimentos:
             print(f'-----\nNome: {procedimento.nome}\nValor: {procedimento.valor}\nDescrição: {procedimento.descricao}\nTempo: {procedimento.tempo}')
 
-    def excluirProcedimento(self, nome):
+    def excluirProcedimento(self, procedimento):
+        self.procedimentos[procedimento].excluirProcedimentossss()
+        del(self.procedimentos[procedimento])
+
+    def encontrarProcedimento(self, nome):
         for procedimento in range(len(self.procedimentos)):
             if self.procedimentos[procedimento].nome == nome:
-                self.procedimentos[procedimento].excluirProcedimentossss()
-                del(self.procedimentos[procedimento])
+                return procedimento
+        return -1

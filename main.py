@@ -42,12 +42,20 @@ def menuAgenda():
 
 def menuProcedimentos():
     while True:
-        option = input("\nSelecione uma opção:\n1) Cadastrar procedimento\n2) Excluir procedimento\n3) Exibir todos procedimentos\n0) Voltar\n")
+        option = input("\nSelecione uma opção:\n1) Cadastrar procedimento\n2) Excluir procedimento\n3) Editar procedimento\n4) Exibir todos procedimentos\n0) Voltar\n")
         if option == "1":
             procedimentos.novoProcedimento()
         elif option == "2":
-            procedimentos.excluirProcedimento(input("Nome: "))
+            procedimento = encontrarProcedimento(input("Nome: "))
+            if procedimento == -1:
+                print("Procedimento não encontrado")
+            else: procedimentos.excluirProcedimento(procedimento)
         elif option == "3":
+            procedimento = encontrarProcedimento(input("Nome: "))
+            if procedimento == -1:
+                print("Procedimento não encontrado")
+            else procedimentos.procedimentos[procedimento].editar
+        elif option == "4":
             procedimentos.listarProcedimentos()
         elif option == "0":
             return
@@ -69,9 +77,8 @@ def menuClientes():
             print("Comando inválido")
 
 def selecionarCliente():
-    nome = input("Nome/CPF do Cliente: ")
 
-    clienteIndex = clientes.encontrarCliente(nome)
+    clienteIndex = clientes.encontrarCliente(input("Nome/CPF do Cliente: "))
     if clienteIndex == -1:
         print("Cliente não encontrado.")
         if getAnswer("Deseja ver a lista de clientes e seus animais?(S/N) ") == 'S':
@@ -99,6 +106,5 @@ def selecionarCliente():
             return
         else:
             print("Comando inválido")
-
 
 main()
