@@ -5,5 +5,5 @@ class Procedimento:
         self.descricao = descricao
         self.tempo = tempo
 
-##    def editar(self):
-        #Fazer
+    def excluirProcedimentossss(self):
+        del self

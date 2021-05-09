@@ -1,10 +1,17 @@
 from models.Procedimento import Procedimento
-class ListaProced:
+class ListaProcedimentos:
     def __init__(self):
-        self.proced = []
+        self.procedimentos = []
 
-    def novoProced(self, nome, valor, tempo, descricao):
-        self.proced.append(Procedimento(nome, valor, tempo, descricao))
+    def novoProcedimento(self):
+        self.procedimentos.append(Procedimento(input("Nome: "), input("Valor: "), input("Descrição: "), input("Tempo: ")))
 
-##    def excluirProced(self, idnome):
-        #fazer -- permitir pesquisa por ID ou por Nome, identificando qual deles o usuário usou como entrada
+    def listarProcedimentos(self):
+        for procedimento in self.procedimentos:
+            print(f'-----\nNome: {procedimento.nome}\nValor: {procedimento.valor}\nDescrição: {procedimento.descricao}\nTempo: {procedimento.tempo}')
+
+    def excluirProcedimento(self, nome):
+        for procedimento in range(len(self.procedimentos)):
+            if self.procedimentos[procedimento].nome == nome:
+                self.procedimentos[procedimento].excluirProcedimentossss()
+                del(self.procedimentos[procedimento])

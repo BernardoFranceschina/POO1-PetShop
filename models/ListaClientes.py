@@ -40,9 +40,6 @@ class ListaClientes:
                     if choice == -1:
                         return -2
                     else: return foundClients[choice]
-            
-                
-        return clienteIndex
 
     def printLista(self, detalhes, pets):
         for cliente in self.clientes:
@@ -64,7 +61,3 @@ class ListaClientes:
                         foundPets.append([cliente, pet])
     
         return foundPets
-
-
-##    def excluirCliente(self, IDnome):
-        #fazer -- permitir pesquisa por ID ou por Nome, identificando qual deles o usuário usou como entrada
