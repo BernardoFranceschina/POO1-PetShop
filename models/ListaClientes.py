@@ -1,6 +1,5 @@
 from models.Cliente import Cliente
-from helpers.helper import getAnswer
-import itertools
+from helpers.helper import getAnswer, choosefromlist
 
 
 class ListaClientes:
@@ -13,23 +12,37 @@ class ListaClientes:
             self.clientes[-1].novoPet()
 
     def encontrarCliente(self, info, ID=False):
-        foundClients = []
-        if ID:
+        if ID:                                              #busca por ID
             for cliente in range(len(self.clientes)):
                 if self.clientes[cliente].nome == info:
-                    foundClients.append(cliente)
+                    return cliente
+            return -1
 
         else:
             if info.isnumeric():
-                for cliente in range(len(self.clientes)):
+                for cliente in range(len(self.clientes)):   #busca por CPF
                     if self.clientes[cliente].cpf == info:
-                        foundClients.append(cliente)
+                        return cliente
+                return -1
+
             else:
-                for cliente in range(len(self.clientes)):
+                foundClients = []
+                for cliente in range(len(self.clientes)):   #busca por nome. Caso haja mais de um, pede para o usuário escolher um.
                     if self.clientes[cliente].nome == info:
                         foundClients.append(cliente)
+
+                if foundClients == []:
+                    return -1
+                elif len(foundClients) == 1:
+                    return foundClients[0]
+                else:
+                    choice = choosefromlist("Mais de um cliente com este nome encontrado. Escolha uma opção da seguinte lista:", foundClients, self.clientes, isClient=True, exitOption=True)
+                    if choice == -1:
+                        return -2
+                    else: return foundClients[choice]
+            
                 
-        return foundClients
+        return clienteIndex
 
     def printLista(self, detalhes, pets):
         for cliente in self.clientes:

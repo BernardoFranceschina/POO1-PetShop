@@ -88,3 +88,24 @@ def isclienteIndex(index):
     if isinstance(index, int):
         return True
     else: return False
+
+def choosefromlist(text, options, clientes, isClient, exitOption):
+    print(text)
+    if exitOption:
+        print("0: cancelar", end="")
+    for i in range(len(options)):
+        if isClient:
+            print(f"\n{i + 1}: Cliente -- ", end="")
+            clientes[options[i]].printData(True, True)
+        else:
+            print(f"{i + 1}: Animal -- ", end="")
+            clientes[options[i][0]].pets[options[i][1]].printData(True)
+
+    if exitOption:
+        choice = int(getAnswer("\n", [str(x) for x in range(len(options) + 1)]))
+        if choice == 0:
+            return -1
+
+        else: return choice - 1
+    else:
+        return int(getAnswer("\n", [str(x) for x in range(1, len(options) + 1)])) - 1

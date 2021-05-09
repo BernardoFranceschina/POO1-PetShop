@@ -1,7 +1,7 @@
 from models.Pet import Pet
 from helpers.helper import getAnswer
 import itertools
-id_iter = itertools.count()
+id_iter = itertools.count(1)
 class Cliente:
     def __init__(self, nome, email, telefone, cpf):
         self.id_cliente = next(id_iter)
@@ -19,7 +19,7 @@ class Cliente:
                 break
 
     def printData(self, detalhes, pets):
-        print("\nNome:", self.nome, end=" ")
+        print("Nome:", self.nome, end=" ")
         if detalhes:
             print("| Email:", self.email, "| Telefone:", self.telefone, "| CPF:", self.cpf, end=" ")
         if pets:

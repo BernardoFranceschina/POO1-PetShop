@@ -1,5 +1,5 @@
 import itertools
-id_iter = itertools.count(0)
+id_iter = itertools.count(1)
 class Pet:
     def __init__(self, especie, nome, raca, cor):
         self.id_pet = next(id_iter)

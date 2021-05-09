@@ -7,60 +7,53 @@ from models.Procedimento import Procedimento
 from models.Trabalho import Trabalho
 
 clientes = ListaClientes()
+agenda = Agenda()
 
 def main():
     while True:
-        option = input("\nSelecione uma opção:\n1) Cadastrar Cliente\n2) Cadastrar animal\n3) Consultar dados\n5) Alterar dados de um\n\n")
+        option = input("\nSelecione uma opção:\n1) Cadastrar cliente\n2) Novo evento\n3) Selecionar cliente\n4) Selecionar animal\n5) Exibir todos os cadastros\n0) Encerrar o programa\n\n")
+        print()
         if option == "1":
             clientes.novoCliente()
         elif option == "2":
-            registerPet()
+            print("Fazer")      #agenda.novoTrabalho       Falta fazer essa função
         elif option == "3":
-            printData()         #Mudar nome
+            selecionarCliente()
         elif option == "4":
-            print("cu")
+            print("Fazer")      #fazer
         elif option == "5":
-            print("Encerrando o programa.")
+            clientes.printLista(True, True)
+        elif option == "0":
+            print("Encerrando")
             return
         else: print("Comando inválido")
 
-    
-def registerPet():
-    nomeCPF = input("Qual o dono do animal? Nome/CPF: ")
-    clienteIndex = clientes.encontrarCliente(nomeCPF)
+def selecionarCliente():
+    nome = input("Nome/CPF do Cliente: ")
 
-    if clienteIndex == []:
+    clienteIndex = clientes.encontrarCliente(nome)
+    if clienteIndex == -1:
         print("Cliente não encontrado.")
-        if getAnswer("Deseja ver a lista de clientes e seus animais? ") == 'S':
+        if getAnswer("Deseja ver a lista de clientes e seus animais?(S/N) ") == 'S':
             clientes.printLista(False, True)    ##printList(False, True, clientes)
+        return
+    if clienteIndex == -2:
+        return
 
-    elif len(clienteIndex) == 1:
-        clientes.clientes[clienteIndex[0]].novoPet()
-
-    else:
-        clientes.clientes[choosefromlist("Mais de um Cliente com este nome encontrado. Escolha um da seguinte lista:", clienteIndex, clientes, exitOption=False)].novoPet()
-        
-def printData():
-    nome = input("Nome/CPF do Cliente ou nome do animal: ")
-    objIndex = clientes.encontrarCliente(nome) + clientes.encontrarPet(nome)
-
-    if objIndex == []:
-        print("Cliente/animal não encontrado.")
-        if getAnswer("Deseja ver a lista de clientes e seus animais? ") == 'S':
-            clientes.printLista(False, True)
-
-    elif len(objIndex) == 1:
-        if isclienteIndex(objIndex[0]):
-            clientes.clientes[objIndex[0]].printData(True, True)
-        else:
-            clientes.clientes[objIndex[0][0]].pets[objIndex[0][1]].printData(True)
-
-    else:
-        choice = choosefromlist("Mais de um Cliente/animal com este nome encontrado. Escolha um da seguinte lista:", objIndex, clientes, exitOption=False)
-        choice = choosefromlist("Mais de um cliente/animal com este nome encontrado. Escolha um da seguinte lista:", objIndex, clients, exitOption=False)
-        if isclienteIndex(objIndex[choice]):
-            clients[objIndex[choice]].printData(True, True)
-        else:
-            clients[objIndex[choice][0]].pets[objIndex[choice][1]].printData(True)
+    
+    print("\nCliente selecionado:", clientes.clientes[clienteIndex].nome)
+    while True:
+        option = input("Selecione uma opção:\n1) Novo animal\n2) Editar cadastro\n3) Excluir cadastro\n4) Exibir informações\n0) Voltar ao menu principal\n\n")
+        if option == "1":
+            clientes.clientes[clienteIndex].novoPet()
+        elif option == "2":
+            print("Fazer")  #Fazer
+        elif option == "3":
+            print("Fazer")  #Fazer
+        elif option == "4":
+            clientes.clientes[clienteIndex].printData(True, True)
+        elif option == "0":
+            return
+        else: print("Comando inválido")
 
 main()
