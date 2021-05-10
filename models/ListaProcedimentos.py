@@ -1,10 +1,16 @@
 from models.Procedimento import Procedimento
+from helpers.helper import getnum
+from datetime import timedelta
 class ListaProcedimentos:
     def __init__(self):
         self.procedimentos = []
 
     def novoProcedimento(self):
-        self.procedimentos.append(Procedimento(input("Nome: "), input("Valor: "), input("Descrição: "), input("Tempo: ")))
+
+        duracao = getnum("Duração(hh:mm): ", 2, 0, [24, 60], separator=":")
+        duracao = timedelta(hours = duracao[0], minutes= duracao[1])
+
+        self.procedimentos.append(Procedimento(input("Nome: "), input("Valor: "), duracao, input("Descrição: ")))
 
     def listarProcedimentos(self):
         for procedimento in self.procedimentos:

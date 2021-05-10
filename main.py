@@ -5,7 +5,9 @@ from models.ListaClientes import ListaClientes
 from models.ListaProcedimentos import ListaProcedimentos
 from models.Pet import Pet
 from models.Procedimento import Procedimento
-from models.Trabalho import Trabalho
+from models.Evento import Evento
+
+#precisamos permitir editar e excluir o cadastro de um animal
 
 clientes = ListaClientes()
 agenda = Agenda()
@@ -28,12 +30,16 @@ def main():
 
 def menuAgenda():
     while True:
-        option = input("\nSelecione uma opção:\n1) Cadastrar novo horário\n2) Excluir horário\n3) Exibir consultas do dia\n4) Exibir consultas de amanhã\n0) Voltar\n")
+        option = input("\nSelecione uma opção:\n1) Cadastrar novo evento\n2) Excluir evento\n3) Exibir agenda do dia\n4) Exibir agenda de amanhã\n5) Exibir um período específico\n0) Voltar\n")
         if option == "1":
-            print()
+            agenda.novoEvento(clientes, procedimentos)
         elif option == "2":
             print()
         elif option == "3":
+            print()
+        elif option == "4":
+            print()
+        elif option == "5":
             print()
         elif option == "0":
             return
@@ -54,7 +60,7 @@ def menuProcedimentos():
             procedimento = encontrarProcedimento(input("Nome: "))
             if procedimento == -1:
                 print("Procedimento não encontrado")
-            else procedimentos.procedimentos[procedimento].editar
+            else: procedimentos.procedimentos[procedimento].editar
         elif option == "4":
             procedimentos.listarProcedimentos()
         elif option == "0":
@@ -82,7 +88,7 @@ def selecionarCliente():
     if clienteIndex == -1:
         print("Cliente não encontrado.")
         if getAnswer("Deseja ver a lista de clientes e seus animais?(S/N) ") == 'S':
-            clientes.printLista(False, True)  ##printList(False, True, clientes)
+            clientes.printLista(False, True)
         return
     if clienteIndex == -2:
         return
