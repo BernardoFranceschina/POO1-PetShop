@@ -1,5 +1,5 @@
 from models.Cliente import Cliente
-from helpers.helper import getAnswer, choosefromlist
+from helpers.helper import getAnswer, getnum, choosefromlist
 
 
 class ListaClientes:
@@ -7,7 +7,7 @@ class ListaClientes:
         self.clientes = []
 
     def novoCliente(self):
-        self.clientes.append(Cliente(input("Nome: "), input("Email: "), input("Número de telefone: "), input("CPF: ")))
+        self.clientes.append(Cliente(input("Nome: "), input("Email: "), input("Número de telefone: "), getnum("CPF:")))
         if getAnswer("Deseja cadastrar um animal deste dono? (s/n)") == 'S':
             self.clientes[-1].novoPet()
 
@@ -20,6 +20,7 @@ class ListaClientes:
 
         else:
             if info.isnumeric():
+                info = int(info)
                 for cliente in range(len(self.clientes)):   #busca por CPF
                     if self.clientes[cliente].cpf == info:
                         return cliente

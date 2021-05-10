@@ -7,7 +7,8 @@ from models.Pet import Pet
 from models.Procedimento import Procedimento
 from models.Evento import Evento
 
-#precisamos permitir editar e excluir o cadastro de um animal
+#falta permitir editar e excluir o cadastro de um animal
+#impedir o usuário de cadastrar um nome repetido para animal do mesmo dono
 
 clientes = ListaClientes()
 agenda = Agenda()
@@ -34,7 +35,8 @@ def menuAgenda():
         if option == "1":
             agenda.novoEvento(clientes, procedimentos)
         elif option == "2":
-            print()
+            eventoIndex = agenda.selecionarEvento(clientes)
+            print(eventoIndex)
         elif option == "3":
             print()
         elif option == "4":
