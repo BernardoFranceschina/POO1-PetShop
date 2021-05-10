@@ -31,14 +31,21 @@ def main():
 
 def menuAgenda():
     while True:
-        option = input("\nSelecione uma opção:\n1) Cadastrar novo evento\n2) Excluir evento\n3) Exibir agenda do dia\n4) Exibir agenda de amanhã\n5) Exibir um período específico\n0) Voltar\n")
+        option = input("\nSelecione uma opção:\n1) Cadastrar novo evento\n2) Editar Evento\n3) Excluir evento\n3) Exibir agenda do dia\n4) Exibir agenda de amanhã\n5) Exibir um período específico\n0) Voltar\n")
         if option == "1":
             agenda.novoEvento(clientes, procedimentos)
         elif option == "2":
             eventoIndex = agenda.selecionarEvento(clientes)
-            print(eventoIndex)
+            if eventoIndex == -1:
+                print("Procedimento não encontrado")
+            else:
+                agenda.agenda[eventoIndex].editarEvento()
         elif option == "3":
-            print()
+            eventoIndex = agenda.selecionarEvento(clientes)
+            if eventoIndex == -1:
+                print("Procedimento não encontrado")
+            else:
+                agenda.agenda[eventoIndex].excluirEvento()
         elif option == "4":
             print()
         elif option == "5":
