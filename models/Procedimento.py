@@ -1,4 +1,6 @@
 import itertools
+from helpers.helper import *
+from datetime import timedelta
 id_iter = itertools.count(1)
 class Procedimento:
     def __init__(self, nome, valor, tempo, descricao):
@@ -24,7 +26,9 @@ class Procedimento:
                 self.descricao = input("Nova descricao: ")
                 return
             elif (option == '4'):
-                self.tempo = input("Novo tempo: ")      #corrigir pra função do tempo msm
+                duracao = getnum("Duração(hh:mm): ", 2, 0, [24, 60], separator=":")
+                duracao = timedelta(hours=duracao[0], minutes=duracao[1])
+                self.tempo = duracao
             elif(option == '5'):
                 return
             else: print("Opção inválida")

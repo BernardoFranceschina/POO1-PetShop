@@ -14,7 +14,9 @@ class Cliente:
 
     def novoPet(self):
         while True:
-            self.pets.append(Pet(input("Espécie: "), input("Nome: "), input("Raça: "), input("Cor: ")))
+            nomePet = input("Nome: ")
+
+            self.pets.append(Pet(input("Espécie: "), nomePet, input("Raça: "), input("Cor: ")))
             if getAnswer("Deseja cadastrar outro animal a este dono?(S/N) ") == "N":
                 break
 

@@ -54,21 +54,20 @@ def menuProcedimentos():
         if option == "1":
             procedimentos.novoProcedimento()
         elif option == "2":
-            procedimento = encontrarProcedimento(input("Nome: "))
+            procedimento = procedimentos.encontrarProcedimento(input("Nome: "))
             if procedimento == -1:
                 print("Procedimento não encontrado")
             else: procedimentos.excluirProcedimento(procedimento)
         elif option == "3":
-            procedimento = encontrarProcedimento(input("Nome: "))
+            procedimento = procedimentos.encontrarProcedimento(input("Nome: "))
             if procedimento == -1:
                 print("Procedimento não encontrado")
-            else: procedimentos.procedimentos[procedimento].editar
+            else: procedimentos.procedimentos[procedimento].editar()
         elif option == "4":
             procedimentos.listarProcedimentos()
         elif option == "0":
             return
-        else:
-            print("Comando inválido")
+        else: print("Comando inválido")
 
 def menuClientes():
     while True:
