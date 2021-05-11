@@ -15,7 +15,7 @@ class Procedimento:
 
     def editar(self):
         while True:
-            option = input("Qual informação deseja editar?\n1) Nome\n2) Valor\n3) Descrição\n4) Tempo\n5) Voltar")
+            option = input("Qual informação deseja editar?\n1) Nome\n2) Valor\n3) Descrição\n4) Tempo\n0) Voltar")
             if (option == '1'):
                 self.nome = input('Novo nome: ')
                 return
@@ -29,6 +29,6 @@ class Procedimento:
                 duracao = getnum("Duração(hh:mm): ", 2, 0, [24, 60], separator=":")
                 duracao = timedelta(hours=duracao[0], minutes=duracao[1])
                 self.tempo = duracao
-            elif(option == '5'):
+            elif(option == '0'):
                 return
             else: print("Opção inválida")

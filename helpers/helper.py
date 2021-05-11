@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 def getnum(question, amount=1, min='n', max='n', type='i', separator=" "):
     def isvalidinput(list1):
         counter = 0
@@ -109,3 +112,18 @@ def choosefromlist(text, options, clientes, isClient, exitOption):
         else: return choice - 1
     else:
         return int(getAnswer("\n", [str(x) for x in range(1, len(options) + 1)])) - 1
+
+def getData(texto, hora):
+    while True:
+        data = input(texto)
+        if data == '0':
+            return -1
+        try:
+            if hora:
+                data = datetime.strptime(data, "%d/%m/%y %H:%M")
+            else:
+                data = datetime.strptime(data, "%d/%m/%y").date()
+        except:
+            print("Entrada inválida")
+            continue
+        return data

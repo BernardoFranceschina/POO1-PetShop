@@ -5,7 +5,7 @@ id_iter = itertools.count(1)
 class Cliente:
     def __init__(self, nome, email, telefone, cpf):
         self.id_cliente = next(id_iter)
-        self.nome = nome
+        self.nome = nome.capitalize()
         self.email = email
         self.telefone = telefone
         self.cpf = cpf
@@ -37,9 +37,9 @@ class Cliente:
             else: print("Opção inválida")
 
     def printData(self, detalhes, pets):
-        print("Nome:", self.nome, end=" ")
+        print("Nome:", self.nome.ljust(32), end=" ")
         if detalhes:
-            print("| Email:", self.email, "| Telefone:", self.telefone, "| CPF:", self.cpf, end=" ")
+            print("| Email:", self.email.ljust(32), "| Telefone:", self.telefone.ljust(15), "| CPF:", str(self.cpf).ljust(11), end=" ")
         if pets:
             print("-- Animais: ", end="")
             for j in self.pets:

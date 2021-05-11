@@ -4,14 +4,14 @@ class Pet:
     def __init__(self, especie, nome, raca, cor):
         self.id_pet = next(id_iter)
         self.especie = especie
-        self.nome = nome
+        self.nome = nome.capitalize()
         self.raca = raca
         self.cor = cor
 
     def printData(self, detalhes):
-        print("Nome:", self.nome, "| Espécie:", self.especie, end=" ")
+        print("Nome:", self.nome.ljust(20), "| Espécie:", self.especie.ljust(20), end=" ")
         if detalhes:
-            print("| Raça:", self.raca, "| Cor:", self.cor)
+            print("| Raça:", self.raca.ljust(20), "| Cor:", self.cor.ljust(15))
 
 class Vip(Pet):
     def __init__(self, id_pet, especie, nome, raca, cor, peso, altura, vacinas, planoSaude):

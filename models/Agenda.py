@@ -2,7 +2,7 @@ from models.Evento import *
 from datetime import datetime, timedelta
 from models.ListaClientes import ListaClientes
 from models.Cliente import Cliente
-from helpers.helper import getnum, getAnswer
+from helpers.helper import *
 from models.ListaProcedimentos import *
 
 class Agenda:
@@ -31,7 +31,7 @@ class Agenda:
         #Pega o nome do animal
         while True:
             clientes.clientes[cliente].printData(False, True)
-            nome = input("Nome do animal: ")
+            nome = input("Nome do animal: ").capitalize()
             if nome == '0':
                 return
 
@@ -45,16 +45,9 @@ class Agenda:
             break
 
         #Pega a data
-        while True:
-            data = input("Data e o horário no formato (dd/mm/aa hh:mm): ")
-            if data == 0:
-                return
-            try:
-                data = datetime.strptime(data, "%d/%m/%y %H:%M")
-            except:
-                print("Entrada inválida")
-                continue
-            break
+        data = getData("Data e o horário no formato (dd/mm/aa hh:mm): ", True)
+        if data == -1:
+            return
         
         #Pega o procedimento e a sua duração
         while True:
@@ -62,18 +55,15 @@ class Agenda:
             if nome == "0":
                 return
 
-
-            procedimentoNome = -1
-            for procedimento in range(len(procedimentos.procedimentos)):
-                if procedimentos.procedimentos[procedimento].nome == nome:
-                    procedimentoNome = procedimentos.procedimentos[procedimento].nome
-                    duracao = procedimentos.procedimentos[procedimento].tempo
-            if procedimentoNome == -1:
+            procedimentoIndex = procedimentos.encontrarProcedimento(nome)
+            if procedimentoIndex == -1:
                 print("Procedimento não encontrado")
                 if getAnswer("Deseja ver a lista de procedimentos?(S/N) ") == 'S':
                     procedimentos.listarProcedimentos()
                 continue
             break
+        procedimentoNome = procedimentos.procedimentos[procedimentoIndex].nome
+        duracao = procedimentos.procedimentos[procedimentoIndex].tempo
         
         posicao = self.encontrarPosicao(data)
         if posicao == -1:
@@ -87,19 +77,24 @@ class Agenda:
                 return posicao
         return -1
     
+    def ajustarPosicao(self, eventoIndex):
+        evento = self.agenda[eventoIndex]
+        self.agenda.pop(eventoIndex)
+
+        novaPosicao = self.encontrarPosicao(evento.dataInicio)
+        if novaPosicao == -1:
+            self.agenda.append(evento)
+        else:
+            self.agenda.insert(novaPosicao, evento)
+
+        
+
     def selecionarEvento(self, clientes):
         print("Insira 0 a qualquer momento para voltar")
-        while True:
-            data = input("Data do evento (dd/mm/aa): ")
-            if data == "0":
-                return
-            try:
-                data = datetime.strptime(data, "%d/%m/%y")
-            except:
-                print("Entrada inválida")
-                continue
-            break
-        data = data.date()
+
+        data = getData("Data do evento (dd/mm/aa): ", False)
+        if data == -1:
+            return
         eventos = []
         for eventoIndex in range(len(self.agenda)):
             if self.agenda[eventoIndex].dataInicio.date() == data:
@@ -116,3 +111,19 @@ class Agenda:
             self.agenda[eventos[i]].printEvento(False, True, True)
 
         return eventos[int(getAnswer("\n", [str(x) for x in range(1, len(eventos) + 1)])) - 1]
+
+    def printAgenda(self, inicio, fim):
+        periodo = False #Determina se o looping for está passando pelo periodo a ser impresso
+        for evento in self.agenda:
+            if periodo:
+                if fim >= evento.dataInicio.date():
+                    evento.printEvento(True, True, True)
+                else:
+                    break
+            elif inicio <= evento.dataInicio.date():
+                    evento.printEvento(True, True, True)
+                    periodo = True
+    def printTodosEventos(self):
+        for evento in self.agenda:
+            evento.printEvento(True, True, True)
+

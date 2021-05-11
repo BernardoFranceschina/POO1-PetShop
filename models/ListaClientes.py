@@ -27,6 +27,7 @@ class ListaClientes:
                 return -1
 
             else:
+                info = info.capitalize()
                 foundClients = []
                 for cliente in range(len(self.clientes)):   #busca por nome. Caso haja mais de um, pede para o usuário escolher um.
                     if self.clientes[cliente].nome == info:

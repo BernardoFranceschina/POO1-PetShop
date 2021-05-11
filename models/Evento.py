@@ -1,4 +1,5 @@
 from datetime import date, datetime, timedelta
+from helpers.helper import getAnswer
 from models.ListaProcedimentos import *
 class Evento:
     def __init__(self, clienteCPF, cliente, pet, procedimento, dataInicio, dataFim):
@@ -13,33 +14,78 @@ class Evento:
         if data:
             print(self.dataInicio.strftime("%d/%m/%y"), end =" ")
         if hora:
-            print(self.dataInicio.strftime("%H:%M"), end =" ")
+            print(self.dataInicio.strftime("%H:%M"), "-", self.dataFim.strftime("%H:%M"), end =" ")
+        print("| Procedimento:", self.procedimento.ljust(20), end =" ")
         if detalhes:
-            print("| Nome:", self.cliente, "CPF:", self.clienteCPF, "| Animal:", self.pet, end =" ")
-        
-        print("| Procedimento", self.procedimento)
+            print("| Nome:", self.cliente.ljust(32), "CPF:", str(self.clienteCPF).ljust(11), "| Animal:", self.pet.ljust(20), end =" ")
+        print()
 
-    def excluirEvento(self):
-        del self
-
-    def editarEvento(self):
-        option = input("Qual informação deseja editar?\n1) Cliente e animal\n2) Procedimento\n3) Data")
+    def editarEvento(self, clientes, procedimentos, agenda, eventoIndex):
+        print("Insira 0 a qualquer momento para cancelar e voltar")
+        option = input("Qual informação deseja editar?\n1) Cliente e animal\n2) Procedimento\n3) Data\n")
         if (option == '1'):
-            print()
-        elif(option == '2'):
-            print()
-        elif(option == '3'):
+            while True:                                                                                 
+                nome = input("Nome/CPF do cliente: ")
+                if nome == '0':
+                    return
+                cliente = clientes.encontrarCliente(nome)
+                if cliente == -1:
+                    print("Cliente não encontrado.")
+                    if getAnswer("Deseja ver a lista de clientes e seus animais?(S/N) ") == 'S':
+                        clientes.printLista(False, True)
+                    continue
+                break
+         
             while True:
-                print(f'Data anterior: {self.dataInicio}')
-                data = input("Data e o horário no formato (dd/mm/aa hh:mm): ")
+                clientes.clientes[cliente].printData(False, True)
+                nome = input("Nome do animal: ").capitalize()
+                if nome == '0':
+                    return
+
+                animalNome = -1
+                for animal in range(len(clientes.clientes[cliente].pets)):
+                    if clientes.clientes[cliente].pets[animal].nome == nome:
+                        animalNome = clientes.clientes[cliente].pets[animal].nome
+                if animalNome == -1:
+                    print("Animal não encontrado")
+                    continue
+                break
+
+            self.clienteCPF = clientes.clientes[cliente].cpf
+            self.cliente = clientes.clientes[cliente].nome
+            self.pet = animalNome
+        elif(option == '2'):
+            while True:
+                nome = input("Procedimento: ")
+                if nome == "0":
+                    return
+
+                procedimentoIndex = procedimentos.encontrarProcedimento(nome)
+                if procedimentoIndex == -1:
+                    print("Procedimento não encontrado")
+                    if getAnswer("Deseja ver a lista de procedimentos?(S/N) ") == 'S':
+                        procedimentos.listarProcedimentos()
+                    continue
+                break
+
+            self.procedimento = procedimentos.procedimentos[procedimentoIndex].nome
+            self.dataFim = self.dataInicio + procedimentos.procedimentos[procedimentoIndex].tempo     
+        elif(option == '3'):
+            print(f'Data anterior: {self.dataInicio.strftime("%d/%m/%y")}')
+            while True:
+                data = input("Nova data e o horário no formato (dd/mm/aa hh:mm): ")
                 if data == 0:
                     return
                 try:
                     data = datetime.strptime(data, "%d/%m/%y %H:%M")
-                    self.dataInicio = data
-                    # indexProcedimento = encontrarProcedimento(self.procedimento)         Pegar o procedimento para poder definir data final
-                    self.dataFim = data+
                 except:
                     print("Entrada inválida")
                     continue
                 break
+
+            duracao = self.dataFim - self.dataInicio
+            self.dataInicio = data
+            self.dataFim = data + duracao
+            agenda.ajustarPosicao(eventoIndex)
+        else:
+            print("Comando inválido")

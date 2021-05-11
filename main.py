@@ -6,6 +6,7 @@ from models.ListaProcedimentos import ListaProcedimentos
 from models.Pet import Pet
 from models.Procedimento import Procedimento
 from models.Evento import Evento
+from datetime import date
 
 #falta permitir editar e excluir o cadastro de um animal
 #impedir o usuário de cadastrar um nome repetido para animal do mesmo dono
@@ -31,7 +32,7 @@ def main():
 
 def menuAgenda():
     while True:
-        option = input("\nSelecione uma opção:\n1) Cadastrar novo evento\n2) Editar Evento\n3) Excluir evento\n3) Exibir agenda do dia\n4) Exibir agenda de amanhã\n5) Exibir um período específico\n0) Voltar\n")
+        option = input("\nSelecione uma opção:\n1) Cadastrar novo evento\n2) Editar Evento\n3) Excluir evento\n4) Exibir agenda do dia\n5) Exibir agenda de amanhã\n6) Exibir um período específico\n7) Exibir todos os eventos\n0) Voltar\n")
         if option == "1":
             agenda.novoEvento(clientes, procedimentos)
         elif option == "2":
@@ -39,17 +40,30 @@ def menuAgenda():
             if eventoIndex == -1:
                 print("Procedimento não encontrado")
             else:
-                agenda.agenda[eventoIndex].editarEvento()
+                agenda.agenda[eventoIndex].editarEvento(clientes, procedimentos, agenda, eventoIndex)
         elif option == "3":
             eventoIndex = agenda.selecionarEvento(clientes)
             if eventoIndex == -1:
                 print("Procedimento não encontrado")
             else:
-                agenda.agenda[eventoIndex].excluirEvento()
+                #agenda.agenda[eventoIndex].excluirEvento()
+                agenda.agenda.pop(eventoIndex)
         elif option == "4":
-            print()
+            hoje = date.today()
+            agenda.printAgenda(hoje, hoje)
         elif option == "5":
-            print()
+            hoje.day = hoje.day + 1
+            agenda.printAgenda(hoje, hoje)
+        elif option == "6":
+            inicio = getData("Desde (dd/mm/aa): ", False)
+            if inicio == -1:
+                continue
+            fim = getData("Até (dd/mm/aa): ", False)
+            if fim == -1:
+                continue
+            agenda.printAgenda(inicio, fim)
+        elif option == "7":
+            agenda.printTodosEventos()
         elif option == "0":
             return
         else:
@@ -57,19 +71,19 @@ def menuAgenda():
 
 def menuProcedimentos():
     while True:
-        option = input("\nSelecione uma opção:\n1) Cadastrar procedimento\n2) Excluir procedimento\n3) Editar procedimento\n4) Exibir todos procedimentos\n0) Voltar\n")
+        option = input("\nSelecione uma opção:\n1) Cadastrar procedimento\n2) Editar procedimento\n3) Excluir procedimento\n4) Exibir todos procedimentos\n0) Voltar\n")
         if option == "1":
             procedimentos.novoProcedimento()
         elif option == "2":
             procedimento = procedimentos.encontrarProcedimento(input("Nome: "))
             if procedimento == -1:
                 print("Procedimento não encontrado")
-            else: procedimentos.excluirProcedimento(procedimento)
+            else: procedimentos.procedimentos[procedimento].editar()
         elif option == "3":
             procedimento = procedimentos.encontrarProcedimento(input("Nome: "))
             if procedimento == -1:
                 print("Procedimento não encontrado")
-            else: procedimentos.procedimentos[procedimento].editar()
+            else: procedimentos.excluirProcedimento(procedimento)
         elif option == "4":
             procedimentos.listarProcedimentos()
         elif option == "0":
