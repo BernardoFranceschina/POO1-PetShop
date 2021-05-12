@@ -114,34 +114,25 @@ class Agenda:
         return eventos[int(getAnswer("\n", [str(x) for x in range(1, len(eventos) + 1)])) - 1]
 
     def printAgenda(self, inicio, fim):
-        periodo = False #Determina se o looping for está passando pelo periodo a ser impresso
         for evento in self.agenda:
-            if periodo:
-                if fim >= evento.dataInicio.date():
-                    evento.printEvento(True, True, True)
-                else:
-                    break
+            if fim < evento.dataInicio.date():
+                break
             elif inicio <= evento.dataInicio.date():
-                    evento.printEvento(True, True, True)
-                    periodo = True
+                evento.printEvento(True, True, True)
 
     def printTodosEventos(self):
         for evento in self.agenda:
             evento.printEvento(True, True, True)
 
     def getCaixa(self, inicio, fim, clientes):
-        periodo = False
         caixa = ((fim.year - inicio.year) * 12 + fim.month - inicio.month) * clientes.vips * 20
-        if fim.day == 30:
+        if fim.day >= 30:
             caixa += clientes.vips * 20
 
         for evento in self.agenda:
-            if periodo:
-                if fim >= evento.dataInicio.date():
-                    caixa += evento.valor
-                else:
-                    break
+            if fim < evento.dataInicio.date():
+                break
             elif inicio <= evento.dataInicio.date():
                     caixa += evento.valor
-                    periodo = True
+
         return caixa

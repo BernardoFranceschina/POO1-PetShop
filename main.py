@@ -3,13 +3,10 @@ from models.Agenda import Agenda
 from models.Cliente import Cliente
 from models.ListaClientes import ListaClientes
 from models.ListaProcedimentos import ListaProcedimentos
-from models.Pet import Pet
+from models.Pet import Pet, Vip
 from models.Procedimento import Procedimento
 from models.Evento import Evento
 from datetime import date, timedelta
-
-#falta permitir editar e excluir o cadastro de um animal
-#impedir o usuário de cadastrar um nome repetido para animal do mesmo dono
 
 clientes = ListaClientes()
 agenda = Agenda()
@@ -127,26 +124,37 @@ def selecionarCliente():
         elif option == "2":
             clientes.clientes[clienteIndex].editarCliente()
         elif option == "3":
-            optionExcluir = input('Selecione uma opção:\n1) Excluir Cliente\n2) Excluir Animal\n0) Voltar')
-            if optionExcluir == "1":
-                if getAnswer(f'Deseja excluir este cliente?') == "S":
-                    del (clientes.clientes[clienteIndex])
-                    return
-            elif optionExcluir == "2":
-                while True:
-                    print("Digite 0 para voltar")
-                    nomePet = input("Nome: ").capitalize()
-                    if nomePet == 0:
-                        break
-                    nomeRes = clientes.encontrarPet(nomePet)
-                    if nomeRes == -1 or nomeRes == []:
-                        print("Pet não encontrado")
-                    else:
-                        if getAnswer(f'Deseja excluir este animal? (S/N)') == "S":
-                            clientes.excluirPet(nomePet)
+            while True:
+                optionExcluir = input('Selecione uma opção:\n1) Excluir Cliente\n2) Excluir Animal\n0) Voltar\n')
+                if optionExcluir == "1":
+                    if getAnswer(f'Deseja excluir este cliente?') == "S":
+                        del (clientes.clientes[clienteIndex])
+                        return
+                elif optionExcluir == "2":
+                    clientes.clientes[clienteIndex].printData(False, True)
+                    while True:
+                        print("Digite 0 para voltar")
+                        nomePet = input("Nome: ").capitalize()
+                        if nomePet == "0":
                             break
-            elif optionExcluir == "0":
-                break
+                        petIndex = -1
+                        for pet in range(len(clientes.clientes[clienteIndex].pets)):
+                            if clientes.clientes[clienteIndex].pets[pet].nome == nomePet:
+                                petIndex = pet
+                        if petIndex == -1:
+                            print("Pet não encontrado")
+                            continue
+                        else:
+                            if getAnswer(f'Deseja excluir este animal? (S/N)') == "S":
+                                if isinstance(clientes.clientes[clienteIndex].pets[petIndex], Vip):
+                                    clientes.vips -= 1
+                                clientes.clientes[clienteIndex].pets.pop(petIndex)
+                                break
+
+                elif optionExcluir == "0":
+                        break
+                else: print("Comando inválido")
+
         elif option == "4":
             clientes.clientes[clienteIndex].printData(True, True)
         elif option == "0":
@@ -156,7 +164,7 @@ def selecionarCliente():
     
 def menuCaixa():
     while True:
-        option = input("\nSelecione uma opção:\n1) Ver fluxo de caixa esperado para o mês atual\n2) Ver fluxo de caixa esperado este e para os próximos meses\n3) Ver fluxo de caixa dos últimos meses\n4) Exibir todos os procedimentos\n0) Voltar\n")
+        option = input("\nSelecione uma opção:\n1) Ver fluxo de caixa esperado para o mês atual\n2) Ver fluxo de caixa esperado para este e para os próximos meses\n3) Ver fluxo de caixa dos últimos meses\n4) Ver fluxo de caixa de um período personalizado\n0) Voltar\n")
         if option == "1":
             inicio = date.today()
             fim = inicio

@@ -57,9 +57,9 @@ class ListaClientes:
     
         return foundPets
 
-    def excluirPet(self, nome):
-        for cliente in range(len(self.clientes)):
-            for pet in range(len(self.clientes[cliente].pets)):
-                if self.clientes[cliente].pets[pet].nome == nome:
-                    del (self.clientes[cliente].pets[pet])
+#    def excluirPet(self, nome):
+#        for cliente in range(len(self.clientes)):
+#            for pet in range(len(self.clientes[cliente].pets)):
+#                if self.clientes[cliente].pets[pet].nome == nome:
+#                    del (self.clientes[cliente].pets[pet])
 
