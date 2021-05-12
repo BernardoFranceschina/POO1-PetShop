@@ -10,11 +10,11 @@ class ListaProcedimentos:
         duracao = getnum("Duração(hh:mm): ", 2, 0, [24, 60], separator=":")
         duracao = timedelta(hours = duracao[0], minutes= duracao[1])
 
-        self.procedimentos.append(Procedimento(input("Nome: "), input("Valor: "), duracao, input("Descrição: ")))
+        self.procedimentos.append(Procedimento(input("Nome: "), getnum("Valor: ", 1, 0), duracao, input("Descrição: ")))
 
     def listarProcedimentos(self):
         for procedimento in self.procedimentos:
-            print(f'Nome: {procedimento.nome.ljust(20)} | Valor: {procedimento.valor.ljust(10)} | Tempo: {procedimento.tempo} | Descrição: {procedimento.descricao}')
+            print(f'Nome: {procedimento.nome.ljust(20)} | Valor: {str(procedimento.valor).ljust(10)} | Tempo: {procedimento.tempo} | Descrição: {procedimento.descricao}')
 
     def excluirProcedimento(self, procedimento):
         del(self.procedimentos[procedimento])

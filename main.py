@@ -6,7 +6,7 @@ from models.ListaProcedimentos import ListaProcedimentos
 from models.Pet import Pet
 from models.Procedimento import Procedimento
 from models.Evento import Evento
-from datetime import date
+from datetime import date, timedelta
 
 #falta permitir editar e excluir o cadastro de um animal
 #impedir o usuário de cadastrar um nome repetido para animal do mesmo dono
@@ -19,12 +19,14 @@ def main():
     while True:
         option = input("Selecione uma opção:\n1) Clientes\n2) Agenda\n3) Procedimentos\n0) Encerrar o programa\n")
         print()
-        if option == "1":
+        if option == "1": 
             menuClientes()
         elif option == "2":
             menuAgenda()
         elif option == "3":
             menuProcedimentos()
+        elif option == "4":
+            menuCaixa()
         elif option == "0":
             return
         else:
@@ -120,19 +122,86 @@ def selecionarCliente():
         option = input(
             "Selecione uma opção:\n1) Novo animal\n2) Editar cadastro\n3) Excluir cadastro\n4) Exibir informações\n0) Voltar ao menu principal\n\n")
         if option == "1":
-            clientes.clientes[clienteIndex].novoPet()
+            clientes.clientes[clienteIndex].novoPet(clientes)
         elif option == "2":
             clientes.clientes[clienteIndex].editarCliente()
         elif option == "3":
-            if getAnswer(f'Deseja excluir este cliente?') == "S":
-                clientes.clientes[clienteIndex].excluirCliente()
-                del (clientes.clientes[clienteIndex])
-                return
+            optionExcluir = input('Selecione uma opção:\n1) Excluir Cliente\n2) Excluir Animal\n0) Voltar')
+            if optionExcluir == "1":
+                if getAnswer(f'Deseja excluir este cliente?') == "S":
+                    del (clientes.clientes[clienteIndex])
+                    return
+            elif optionExcluir == "2":
+                while True:
+                    print("Digite 0 para voltar")
+                    nomePet = input("Nome: ").capitalize()
+                    if nomePet == 0:
+                        break
+                    nomeRes = clientes.encontrarPet(nomePet)
+                    if nomeRes == -1 or nomeRes == []:
+                        print("Pet não encontrado")
+                    else:
+                        if getAnswer(f'Deseja excluir este animal? (S/N)') == "S":
+                            clientes.excluirPet(nomePet)
+                            break
+            elif optionExcluir == "0":
+                break
         elif option == "4":
             clientes.clientes[clienteIndex].printData(True, True)
         elif option == "0":
             return
         else:
             print("Comando inválido")
+    
+def menuCaixa():
+    while True:
+        option = input("\nSelecione uma opção:\n1) Ver fluxo de caixa esperado para o mês atual\n2) Ver fluxo de caixa esperado este e para os próximos meses\n4) Ver fluxo de caixa dos últimos meses\n4) Exibir todos os procedimentos\n0) Voltar\n")
+        if option == "1":
+            inicio = date.today()
+            fim = inicio
+            inicio.day = 1
+            try:
+                fim.day = 31
+            except:
+                fim.day = 30
+            print("Fluxo de caixa do mês atual:", agenda.getCaixa(inicio, fim, clientes))
+        elif option == "2":
+            meses = getnum("Deseja calcular o caixa de quantos meses além do atual? ", 1, 2, 12000)
+            inicio = date.today()
+            fim = inicio
+            inicio.day = 1
+            fim.year += int((fim.month + meses)/12)
+            fim.month += (fim.month + meses)%12
+            try:
+                fim.day = 31
+            except:
+                fim.day = 30
+            agenda.getCaixa(inicio, fim, clientes)
 
+        elif option == "3":
+            meses = getnum("Deseja calcular o caixa de quantos dos meses anteriores?", 1, 1, 12000)
+            inicio = date.today()
+            fim = inicio
+            inicio.day = 1
+            inicio.month = (inicio.month - meses - 1)%12 + 1
+            inicio.year = int((inicio.month - meses - 1)/12) - 1
+            if fim.month == 1:
+                fim.month = 12
+                fim.year -= 1
+            else: fim.month -= 1
+            try:
+                fim.day = 31
+            except:
+                fim.day = 30
+            agenda.getCaixa(inicio, fim)
+
+        elif option == "4":
+            inicio = getData("Desde (dd/mm/aa): ", False)
+            if inicio == -1:
+                continue
+            fim = getData("Até (dd/mm/aa): ", False)
+            if fim == -1:
+                continue
+            print("Fluxo de caixa do período:", agenda.getCaixa(inicio, fim))
+        else: print("Comando inválido")
 main()

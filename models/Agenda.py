@@ -64,12 +64,13 @@ class Agenda:
             break
         procedimentoNome = procedimentos.procedimentos[procedimentoIndex].nome
         duracao = procedimentos.procedimentos[procedimentoIndex].tempo
+        valor = procedimentos.procedimentos[procedimentoIndex].valor
         
         posicao = self.encontrarPosicao(data)
         if posicao == -1:
-            self.agenda.append(Evento(clienteCPF, clienteNome, animalNome, procedimentoNome, data, data + duracao))
+            self.agenda.append(Evento(clienteCPF, clienteNome, animalNome, procedimentoNome, valor, data, data + duracao))
         else:
-            self.agenda.insert(posicao, Evento(clienteCPF, clienteNome, animalNome, procedimentoNome, data, data + duracao))
+            self.agenda.insert(posicao, Evento(clienteCPF, clienteNome, animalNome, procedimentoNome, valor, data, data + duracao))
 
     def encontrarPosicao(self, data):
         for posicao in range(len(self.agenda)):
@@ -128,3 +129,16 @@ class Agenda:
         for evento in self.agenda:
             evento.printEvento(True, True, True)
 
+    def getCaixa(self, inicio, fim, clientes):
+        periodo = False
+        caixa = ((fim.year - inicio.year) * 12 + fim.month - inicio.month) * clientes.vips
+        for evento in self.agenda:
+            if periodo:
+                if fim >= evento.dataInicio.date():
+                    caixa += evento.valor
+                else:
+                    break
+            elif inicio <= evento.dataInicio.date():
+                    caixa += evento.valor
+                    periodo = True
+        return caixa

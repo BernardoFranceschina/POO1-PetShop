@@ -1,10 +1,7 @@
-from models.Pet import Pet
+from models.Pet import *
 from helpers.helper import getAnswer
-import itertools
-id_iter = itertools.count(1)
 class Cliente:
     def __init__(self, nome, email, telefone, cpf):
-        self.id_cliente = next(id_iter)
         self.nome = nome.capitalize()
         self.email = email
         self.telefone = telefone
@@ -12,12 +9,32 @@ class Cliente:
         self.pets = []
         self.gasto = 0
 
-    def novoPet(self):
+    def novoPet(self, clientes):
         while True:
-            nomePet = input("Nome: ")
+            while True:
+                nomeRepetido = False
+                nomePet = input("Nome: ").capitalize()
+                for cliente in range(len(clientes.clientes)):
+                    for pet in range(len(clientes.clientes[cliente].pets)):
+                        if clientes.clientes[cliente].pets[pet].nome == nomePet:
+                            print("\nNome ja cadastrado, por favor insira outro nome")
+                            nomeRepetido = True
+                            break
+                if not nomeRepetido:
+                    break
+            especiePet = input("Espécie: ")
+            racaPet = input("Raça: ")
+            corPet = input("Cor: ")
+            if getAnswer(f'Deseja que {nomePet} seja VIP? (S/N)') == 'S':
+                pesoPet = input("Peso: "),
+                alturaPet = input("Altura: "),
+                vacinadoPet = input("Vacinado? (S/N)"),
+                planoSaudePet = input("Plano de Saude(Caso não tenha deixe em branco): ")
+                clientes.vips += 1
+                self.pets.append(Vip(especiePet, nomePet, racaPet, corPet, pesoPet, alturaPet, vacinadoPet, planoSaudePet))
+            else: self.pets.append(Pet(especiePet, nomePet, racaPet, corPet))
 
-            self.pets.append(Pet(input("Espécie: "), nomePet, input("Raça: "), input("Cor: ")))
-            if getAnswer("Deseja cadastrar outro animal a este dono?(S/N) ") == "N":
+            if getAnswer("Deseja cadastrar outro animal a este dono? (S/N) ") == "N":
                 break
 
     def editarCliente(self):

@@ -14,7 +14,7 @@ class Procedimento:
                 self.nome = input('Novo nome: ')
                 return
             elif (option == '2'):
-                self.valor = input('Novo valor: ')
+                self.valor = getnum('Novo valor: ', 1, 0)
                 return
             elif (option == '3'):
                 self.descricao = input("Nova descricao: ")

@@ -17,3 +17,7 @@ class Vip(Pet):
         self.vacinas = vacinas
         self.planoSaude = planoSaude
         super().__init__(especie, nome, raca, cor)
+
+    def printVipData(self):
+        print("Peso: ", self.peso.ljust(20), "| Vacinado:", self.vacinas.ljust(20), "| Plano de saude:", self.vacinas.ljust(20), end=" ")
+

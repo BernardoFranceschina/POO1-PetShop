@@ -5,11 +5,12 @@ from helpers.helper import getAnswer, getnum, choosefromlist
 class ListaClientes:
     def __init__(self):
         self.clientes = []
+        self.vips = 0
 
     def novoCliente(self):
         self.clientes.append(Cliente(input("Nome: "), input("Email: "), input("Número de telefone: "), getnum("CPF:")))
         if getAnswer("Deseja cadastrar um animal deste dono? (s/n)") == 'S':
-            self.clientes[-1].novoPet()
+            self.clientes[-1].novoPet(self)
 
     def encontrarCliente(self, info, ID=False):
         if ID:                                              #busca por ID
@@ -47,19 +48,18 @@ class ListaClientes:
         for cliente in self.clientes:
             cliente.printData(detalhes, pets)
 
-    def encontrarPet(self, info, ID=False):                             #se ID for 1, a função busca pelo ID. Se for 0, busca pelo nome ou CPF.           
+    def encontrarPet(self, info):
         foundPets = []
-        if ID:
-            for cliente in range(len(self.clientes)):
-                for pet in range(len(self.clientes[cliente].pets)):
-                    if self.clientes[cliente].pets[pet].id_pet == info:
-                        foundPets.append([cliente, pet])
-
-
-        else:
-            for cliente in range(len(self.clientes)):
-                for pet in range(len(self.clientes[cliente].pets)):
-                    if self.clientes[cliente].pets[pet].nome == info:
-                        foundPets.append([cliente, pet])
+        for cliente in range(len(self.clientes)):
+            for pet in range(len(self.clientes[cliente].pets)):
+                if self.clientes[cliente].pets[pet].nome == info:
+                    foundPets.append([cliente, pet])
     
         return foundPets
+
+    def excluirPet(self, nome):
+        for cliente in range(len(self.clientes)):
+            for pet in range(len(self.clientes[cliente].pets)):
+                if self.clientes[cliente].pets[pet].nome == nome:
+                    del (self.clientes[cliente].pets[pet])
+

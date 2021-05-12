@@ -2,13 +2,14 @@ from datetime import date, datetime, timedelta
 from helpers.helper import getAnswer
 from models.ListaProcedimentos import *
 class Evento:
-    def __init__(self, clienteCPF, cliente, pet, procedimento, dataInicio, dataFim):
+    def __init__(self, clienteCPF, cliente, pet, procedimento, valor, dataInicio, dataFim):
         self.cliente = cliente
         self.clienteCPF = clienteCPF
         self.pet = pet
         self.procedimento = procedimento
         self.dataInicio = dataInicio
         self.dataFim = dataFim
+        self.valor = valor
 
     def printEvento(self, data, hora, detalhes):
         if data:
@@ -69,6 +70,7 @@ class Evento:
                 break
 
             self.procedimento = procedimentos.procedimentos[procedimentoIndex].nome
+            self.valor = procedimentos.procedimentos[procedimentoIndex].valor
             self.dataFim = self.dataInicio + procedimentos.procedimentos[procedimentoIndex].tempo     
         elif(option == '3'):
             print(f'Data anterior: {self.dataInicio.strftime("%d/%m/%y")}')
