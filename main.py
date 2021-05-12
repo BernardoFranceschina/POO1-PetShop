@@ -1,12 +1,9 @@
 from helpers.helper import *
 from models.Agenda import Agenda
-from models.Cliente import Cliente
 from models.ListaClientes import ListaClientes
 from models.ListaProcedimentos import ListaProcedimentos
-from models.Pet import Pet, Vip
-from models.Procedimento import Procedimento
-from models.Evento import Evento
-from datetime import date, timedelta
+from models.Pet import *
+from datetime import date
 
 clientes = ListaClientes()
 agenda = Agenda()
@@ -35,13 +32,13 @@ def menuAgenda():
         if option == "1":
             agenda.novoEvento(clientes, procedimentos)
         elif option == "2":
-            eventoIndex = agenda.selecionarEvento(clientes)
+            eventoIndex = agenda.selecionarEvento()
             if eventoIndex == -1:
                 print("Procedimento não encontrado")
             else:
                 agenda.agenda[eventoIndex].editarEvento(clientes, procedimentos, agenda, eventoIndex)
         elif option == "3":
-            eventoIndex = agenda.selecionarEvento(clientes)
+            eventoIndex = agenda.selecionarEvento()
             if eventoIndex == -1:
                 print("Procedimento não encontrado")
             else:
@@ -92,7 +89,7 @@ def menuProcedimentos():
 
 def menuClientes():
     while True:
-        option = input("\nSelecione uma opção:\n1) Cadastrar cliente\n2) Selecionar cliente\n3) Exibir todos os cadastros\n0) Voltar\n")
+        option = input("Selecione uma opção:\n1) Cadastrar cliente\n2) Selecionar cliente\n3) Exibir todos os cadastros\n0) Voltar\n")
         if option == "1":
             clientes.novoCliente()
         elif option == "2":
