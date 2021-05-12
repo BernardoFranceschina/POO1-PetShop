@@ -14,7 +14,7 @@ class ListaProcedimentos:
 
     def listarProcedimentos(self):
         for procedimento in self.procedimentos:
-            print(f'-----\nNome: {procedimento.nome} | Valor: {procedimento.valor} | Descrição: {procedimento.descricao} | Tempo: {procedimento.tempo}')
+            print(f'Nome: {procedimento.nome.ljust(20)} | Valor: {procedimento.valor.ljust(10)} | Tempo: {procedimento.tempo} | Descrição: {procedimento.descricao}')
 
     def excluirProcedimento(self, procedimento):
         del(self.procedimentos[procedimento])

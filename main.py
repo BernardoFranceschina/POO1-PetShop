@@ -71,7 +71,7 @@ def menuAgenda():
 
 def menuProcedimentos():
     while True:
-        option = input("\nSelecione uma opção:\n1) Cadastrar procedimento\n2) Editar procedimento\n3) Excluir procedimento\n4) Exibir todos procedimentos\n0) Voltar\n")
+        option = input("\nSelecione uma opção:\n1) Cadastrar procedimento\n2) Editar procedimento\n3) Excluir procedimento\n4) Exibir todos os procedimentos\n0) Voltar\n")
         if option == "1":
             procedimentos.novoProcedimento()
         elif option == "2":
@@ -125,6 +125,7 @@ def selecionarCliente():
             clientes.clientes[clienteIndex].editarCliente()
         elif option == "3":
             if getAnswer(f'Deseja excluir este cliente?') == "S":
+                clientes.clientes[clienteIndex].excluirCliente()
                 del (clientes.clientes[clienteIndex])
                 return
         elif option == "4":
