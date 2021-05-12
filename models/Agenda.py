@@ -132,6 +132,9 @@ class Agenda:
     def getCaixa(self, inicio, fim, clientes):
         periodo = False
         caixa = ((fim.year - inicio.year) * 12 + fim.month - inicio.month) * clientes.vips * 20
+        if fim.day == 30:
+            caixa += clientes.vips * 20
+
         for evento in self.agenda:
             if periodo:
                 if fim >= evento.dataInicio.date():
