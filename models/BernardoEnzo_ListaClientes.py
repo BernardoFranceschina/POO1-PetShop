@@ -1,5 +1,7 @@
-from models.Cliente import Cliente
-from helpers.helper import getAnswer, getnum, choosefromlist
+#Bernardo Carlos Franceschina - 20203080
+#Enzo Bassani - 20200398
+from models.BernardoEnzo_Cliente import Cliente
+from helpers.BernardoEnzo_helper import getAnswer, getnum, choosefromlist
 
 
 class ListaClientes:

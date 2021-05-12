@@ -1,3 +1,5 @@
+#Bernardo Carlos Franceschina - 20203080
+#Enzo Bassani - 20200398
 from datetime import datetime
 
 

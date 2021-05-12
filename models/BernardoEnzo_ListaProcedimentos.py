@@ -1,5 +1,7 @@
-from models.Procedimento import Procedimento
-from helpers.helper import getnum
+#Bernardo Carlos Franceschina - 20203080
+#Enzo Bassani - 20200398
+from models.BernardoEnzo_Procedimento import Procedimento
+from helpers.BernardoEnzo_helper import getnum
 from datetime import timedelta
 class ListaProcedimentos:
     def __init__(self):

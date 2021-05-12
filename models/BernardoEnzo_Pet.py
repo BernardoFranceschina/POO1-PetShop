@@ -1,3 +1,5 @@
+#Bernardo Carlos Franceschina - 20203080
+#Enzo Bassani - 20200398
 class Pet:
     def __init__(self, especie, nome, raca, cor):
         self.especie = especie

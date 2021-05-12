@@ -1,4 +1,6 @@
-from helpers.helper import *
+#Bernardo Carlos Franceschina - 20203080
+#Enzo Bassani - 20200398
+from helpers.BernardoEnzo_helper import *
 from datetime import timedelta
 class Procedimento:
     def __init__(self, nome, valor, tempo, descricao):

@@ -1,9 +1,11 @@
-from models.Evento import *
+#Bernardo Carlos Franceschina - 20203080
+#Enzo Bassani - 20200398
+from models.BernardoEnzo_Evento import *
 from datetime import datetime, timedelta
-from models.ListaClientes import ListaClientes
-from models.Cliente import Cliente
-from helpers.helper import *
-from models.ListaProcedimentos import *
+from models.BernardoEnzo_ListaClientes import ListaClientes
+from models.BernardoEnzo_Cliente import Cliente
+from helpers.BernardoEnzo_helper import *
+from models.BernardoEnzo_ListaProcedimentos import *
 
 class Agenda:
     def __init__(self):

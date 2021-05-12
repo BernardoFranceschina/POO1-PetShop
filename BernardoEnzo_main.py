@@ -1,8 +1,10 @@
-from helpers.helper import *
-from models.Agenda import Agenda
-from models.ListaClientes import ListaClientes
-from models.ListaProcedimentos import ListaProcedimentos
-from models.Pet import *
+#Bernardo Carlos Franceschina - 20203080
+#Enzo Bassani - 20200398
+from helpers.BernardoEnzo_helper import *
+from models.BernardoEnzo_Agenda import Agenda
+from models.BernardoEnzo_ListaClientes import ListaClientes
+from models.BernardoEnzo_ListaProcedimentos import ListaProcedimentos
+from models.BernardoEnzo_Pet import *
 from datetime import date
 
 clientes = ListaClientes()

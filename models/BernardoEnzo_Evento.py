@@ -1,6 +1,8 @@
+#Bernardo Carlos Franceschina - 20203080
+#Enzo Bassani - 20200398
 from datetime import date, datetime, timedelta
-from helpers.helper import getAnswer
-from models.ListaProcedimentos import *
+from helpers.BernardoEnzo_helper import getAnswer
+from models.BernardoEnzo_ListaProcedimentos import *
 class Evento:
     def __init__(self, clienteCPF, cliente, pet, procedimento, valor, dataInicio, dataFim):
         self.cliente = cliente

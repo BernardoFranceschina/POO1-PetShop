@@ -1,5 +1,7 @@
-from models.Pet import *
-from helpers.helper import getAnswer
+# Bernardo Carlos Franceschina - 20203080
+# Enzo Bassani - 20200398
+from models.BernardoEnzo_Pet import *
+from helpers.BernardoEnzo_helper import getAnswer
 class Cliente:
     def __init__(self, nome, email, telefone, cpf):
         self.nome = nome.capitalize()
