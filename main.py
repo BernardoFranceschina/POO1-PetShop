@@ -17,7 +17,7 @@ procedimentos = ListaProcedimentos()
 
 def main():
     while True:
-        option = input("Selecione uma opção:\n1) Clientes\n2) Agenda\n3) Procedimentos\n0) Encerrar o programa\n")
+        option = input("Selecione uma opção:\n1) Clientes\n2) Agenda\n3) Procedimentos\n4) Caixa\n0) Encerrar o programa\n")
         print()
         if option == "1": 
             menuClientes()
@@ -54,7 +54,8 @@ def menuAgenda():
             hoje = date.today()
             agenda.printAgenda(hoje, hoje)
         elif option == "5":
-            hoje.day = hoje.day + 1
+            hoje = date.today()
+            hoje.replace(day = hoje.day + 1)
             agenda.printAgenda(hoje, hoje)
         elif option == "6":
             inicio = getData("Desde (dd/mm/aa): ", False)
@@ -155,46 +156,45 @@ def selecionarCliente():
     
 def menuCaixa():
     while True:
-        option = input("\nSelecione uma opção:\n1) Ver fluxo de caixa esperado para o mês atual\n2) Ver fluxo de caixa esperado este e para os próximos meses\n4) Ver fluxo de caixa dos últimos meses\n4) Exibir todos os procedimentos\n0) Voltar\n")
+        option = input("\nSelecione uma opção:\n1) Ver fluxo de caixa esperado para o mês atual\n2) Ver fluxo de caixa esperado este e para os próximos meses\n3) Ver fluxo de caixa dos últimos meses\n4) Exibir todos os procedimentos\n0) Voltar\n")
         if option == "1":
             inicio = date.today()
             fim = inicio
-            inicio.day = 1
+            inicio = inicio.replace(day = 1)
             try:
-                fim.day = 31
+                fim = fim.replace(day = 31)
             except:
-                fim.day = 30
+                fim = fim.replace(day = 30)
             print("Fluxo de caixa do mês atual:", agenda.getCaixa(inicio, fim, clientes))
         elif option == "2":
-            meses = getnum("Deseja calcular o caixa de quantos meses além do atual? ", 1, 2, 12000)
+            meses = getnum("Deseja calcular o caixa de quantos meses além do atual? ", 1, 1, 12000)
             inicio = date.today()
             fim = inicio
-            inicio.day = 1
-            fim.year += int((fim.month + meses)/12)
-            fim.month += (fim.month + meses)%12
+            inicio = inicio.replace(day = 1)
+            fim = fim.replace(year = fim.year + int((fim.month + meses)/12))
+            fim = fim.replace(month = (fim.month + meses - 1)%12 + 1)
             try:
-                fim.day = 31
+                fim = fim.replace(day = 31)
             except:
-                fim.day = 30
-            agenda.getCaixa(inicio, fim, clientes)
+                fim = fim.replace(day = 30)
+            print("Fluxo de caixa do(s)", meses, "próximo(s) mês(es):", agenda.getCaixa(inicio, fim, clientes))
 
         elif option == "3":
             meses = getnum("Deseja calcular o caixa de quantos dos meses anteriores?", 1, 1, 12000)
             inicio = date.today()
             fim = inicio
-            inicio.day = 1
-            inicio.month = (inicio.month - meses - 1)%12 + 1
-            inicio.year = int((inicio.month - meses - 1)/12) - 1
+            inicio = inicio.replace(day = 1)
+            inicio = inicio.replace(year = inicio.year - int((12 - inicio.month + meses)/12))
+            inicio = inicio.replace(month = (inicio.month - meses - 1)%12 + 1)
             if fim.month == 1:
-                fim.month = 12
-                fim.year -= 1
-            else: fim.month -= 1
+                fim = fim.replace(month = 12)
+                fim = fim.replace(year = fim.year - 1)
+            else: fim = fim.replace(month = fim.month - 1)
             try:
-                fim.day = 31
+                fim = fim.replace(day = 31)
             except:
-                fim.day = 30
-            agenda.getCaixa(inicio, fim)
-
+                fim = fim.replace(day = 30)
+            print("Fluxo de caixa do(s)", meses, "mês(es) anterior(es):", agenda.getCaixa(inicio, fim, clientes))
         elif option == "4":
             inicio = getData("Desde (dd/mm/aa): ", False)
             if inicio == -1:
@@ -202,6 +202,9 @@ def menuCaixa():
             fim = getData("Até (dd/mm/aa): ", False)
             if fim == -1:
                 continue
-            print("Fluxo de caixa do período:", agenda.getCaixa(inicio, fim))
+            print("Fluxo de caixa do período:", agenda.getCaixa(inicio, fim, clientes))
+
+        elif option == "0":
+            return
         else: print("Comando inválido")
 main()

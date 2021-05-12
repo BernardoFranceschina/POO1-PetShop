@@ -58,3 +58,4 @@ class Cliente:
             print("-- Animais: ", end="")
             for j in self.pets:
                 print(j.nome + ("\n" if j == self.pets[-1] else ", "), end="")
+        print()
