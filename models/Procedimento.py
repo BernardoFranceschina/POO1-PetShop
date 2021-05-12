@@ -1,17 +1,11 @@
-import itertools
 from helpers.helper import *
 from datetime import timedelta
-id_iter = itertools.count(1)
 class Procedimento:
     def __init__(self, nome, valor, tempo, descricao):
-        self.id_procedimento = next(id_iter)
         self.nome = nome
         self.valor  = valor
         self.descricao = descricao
         self.tempo = tempo
-
-    def excluirProcedimentossss(self):
-        del self
 
     def editar(self):
         while True:

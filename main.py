@@ -125,7 +125,6 @@ def selecionarCliente():
             clientes.clientes[clienteIndex].editarCliente()
         elif option == "3":
             if getAnswer(f'Deseja excluir este cliente?') == "S":
-                clientes.clientes[clienteIndex].excluirCliente()
                 del (clientes.clientes[clienteIndex])
                 return
         elif option == "4":

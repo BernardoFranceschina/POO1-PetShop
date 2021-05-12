@@ -89,7 +89,7 @@ class Agenda:
 
         
 
-    def selecionarEvento(self, clientes):
+    def selecionarEvento(self):
         print("Insira 0 a qualquer momento para voltar")
 
         data = getData("Data do evento (dd/mm/aa): ", False)
@@ -123,6 +123,7 @@ class Agenda:
             elif inicio <= evento.dataInicio.date():
                     evento.printEvento(True, True, True)
                     periodo = True
+
     def printTodosEventos(self):
         for evento in self.agenda:
             evento.printEvento(True, True, True)

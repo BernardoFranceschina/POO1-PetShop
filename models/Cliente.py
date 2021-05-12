@@ -20,9 +20,6 @@ class Cliente:
             if getAnswer("Deseja cadastrar outro animal a este dono?(S/N) ") == "N":
                 break
 
-    def excluirCliente(self):
-        del self
-
     def editarCliente(self):
         while True:
             option = input("Qual informação deseja editar?\n1) E-mail\n2) Telefone\n3) Voltar")
